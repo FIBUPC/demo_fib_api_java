@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class Client {
-    private static final String API_BASE_URL = "https://api.fib.upc.edu/v2";
+    private static final String API_BASE_URL = "https://api.fib.upc.edu/v2/";
 
     OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
