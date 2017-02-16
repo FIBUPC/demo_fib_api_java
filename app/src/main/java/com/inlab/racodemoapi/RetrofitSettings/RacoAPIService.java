@@ -1,9 +1,5 @@
 package com.inlab.racodemoapi.RetrofitSettings;
 
-import com.inlab.racodemoapi.Models.PlansEstudiModel;
-
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

@@ -9,7 +9,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.google.gson.Gson;
-import com.inlab.racodemoapi.Models.PlansEstudiModel;
 import com.inlab.racodemoapi.R;
 import com.inlab.racodemoapi.RetrofitSettings.ServiceGenerator;
 import com.inlab.racodemoapi.RetrofitSettings.RacoAPIService;
