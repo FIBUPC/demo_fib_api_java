@@ -7,16 +7,12 @@ import android.widget.TextView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import com.google.gson.Gson;
 import com.inlab.racodemoapi.Models.PlansEstudiModel;
-import com.inlab.racodemoapi.Models.PlansEstudiResult;
 import com.inlab.racodemoapi.R;
-import com.inlab.racodemoapi.RetrofitSettings.Client;
+import com.inlab.racodemoapi.RetrofitSettings.ServiceGenerator;
 import com.inlab.racodemoapi.RetrofitSettings.RacoAPIService;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView = (TextView)findViewById(R.id.textView);
         // Create a very simple REST adapter which points the GitHub API endpoint.
-        RacoAPIService api = Client.getApiService();
+        RacoAPIService api = ServiceGenerator.getApiService();
 
 // Fetch a list of the Github repositories.
         Call<PlansEstudiModel> call =
