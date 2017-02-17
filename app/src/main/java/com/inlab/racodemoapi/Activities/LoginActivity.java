@@ -102,7 +102,21 @@ public class LoginActivity extends Activity {
                                 String json = new Gson().toJson(accessToken);
                                 System.out.println(json);
                                 String success = "Log in successful";
-                                textView.setText(success);
+                                RacoAPIService racoAPIService = ServiceGenerator.createService(RacoAPIService.class,clientId,clientSecret,accessToken.getAccessToken());
+                                Call<JoModel> call1 = racoAPIService.getMyInfo();
+                                call1.enqueue(new Callback<JoModel>() {
+                                    @Override
+                                    public void onResponse(Call<JoModel> call, Response<JoModel> response) {
+                                        String jo = response.body().getNom();
+                                        String welcome = "Welcome "+jo;
+                                        textView.setText(welcome);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<JoModel> call, Throwable t) {
+
+                                    }
+                                });
                             }
                         }
 
