@@ -24,18 +24,19 @@ public class ServiceGenerator {
                     .addConverterFactory(GsonConverterFactory.create());
 
     public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, null);
+        retrofit = builder.build();
+        return retrofit.create(serviceClass);
     }
 
     public static <S> S createService(
-            Class<S> serviceClass, String clientId, String clientSecret) {
+            Class<S> serviceClass, String clientId, String clientSecret, String authToken) {
         if (!TextUtils.isEmpty(clientId)
                 && !TextUtils.isEmpty(clientSecret)) {
-            String authToken = Credentials.basic(clientId, clientSecret);
+
             return createService(serviceClass, authToken);
         }
 
-        return createService(serviceClass, null, null);
+        return createService(serviceClass, null, null, null);
     }
 
     public static <S> S createService(
