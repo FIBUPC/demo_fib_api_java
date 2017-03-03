@@ -1,6 +1,6 @@
 package com.inlab.racodemoapi.RetrofitSettings;
 
-import com.inlab.racodemoapi.Models.JoModel;
+import com.inlab.racodemoapi.Models.User;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -13,6 +13,6 @@ import retrofit2.http.Headers;
 public interface RacoAPIService {
         @Headers("Accept: application/json")
         @GET("jo/")
-        Call<JoModel> getMyInfo(
+        Call<User> getMyInfo(
         );
 }

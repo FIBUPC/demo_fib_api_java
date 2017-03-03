@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by florencia.rimolo on 16/02/2017.
  */
 
-public class JoModel {
+public class User {
 
     private String username;
     private String assignatures;
