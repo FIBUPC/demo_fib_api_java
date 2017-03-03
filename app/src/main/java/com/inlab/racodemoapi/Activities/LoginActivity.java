@@ -31,9 +31,10 @@ public class LoginActivity extends Activity {
     private final String redirectUri = "apifib://raco";
     private final String responseType = "code";
     private AccessToken accessToken;
-    SharedPreferences prefs = getActivity().getPreferences(Context.MODE_PRIVATE);
+    SharedPreferences prefs;
     TextView textView;
     private User user;
+    private boolean isLogged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,10 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         textView = (TextView)findViewById(R.id.textViewJo);
         Button loginButton = (Button) findViewById(R.id.loginbutton);
+        prefs = this.getSharedPreferences("com.inlab.racodemoapi",Context.MODE_PRIVATE);
+        if (prefs.getBoolean("isLogged", false)) {
+            goToMain();
+        }
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,12 +82,9 @@ public class LoginActivity extends Activity {
                                 String json = new Gson().toJson(accessToken);
                                 System.out.println(json);
                                 String success = "Log in successful";
+                                isLogged = true;
                                 savePrefs();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                                startActivity(intent);
+                                goToMain();
                             }
                         }
 
@@ -98,11 +100,20 @@ public class LoginActivity extends Activity {
     }
     private void savePrefs() {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("accesToken", this.accessToken.getAccessToken());
-        editor.commit();
+        editor.putString("accessToken", this.accessToken.getAccessToken());
+        editor.putBoolean("isLogged", this.isLogged);
+        editor.apply();
     }
     public Activity getActivity() {
         return this;
+    }
+
+    public void goToMain() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
     }
 }
 
