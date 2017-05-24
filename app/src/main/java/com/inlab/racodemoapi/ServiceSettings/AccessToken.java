@@ -1,4 +1,4 @@
-package com.inlab.racodemoapi.RetrofitSettings;
+package com.inlab.racodemoapi.ServiceSettings;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

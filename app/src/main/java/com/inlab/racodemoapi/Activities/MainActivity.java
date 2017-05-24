@@ -2,7 +2,6 @@ package com.inlab.racodemoapi.Activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -10,8 +9,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.inlab.racodemoapi.Models.User;
 import com.inlab.racodemoapi.R;
-import com.inlab.racodemoapi.RetrofitSettings.RacoAPIService;
-import com.inlab.racodemoapi.RetrofitSettings.ServiceGenerator;
+import com.inlab.racodemoapi.ServiceSettings.RacoAPIService;
+import com.inlab.racodemoapi.ServiceSettings.ServiceGenerator;
 
 import retrofit2.Call;
 import retrofit2.Callback;

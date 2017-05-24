@@ -15,9 +15,9 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.inlab.racodemoapi.Models.User;
 import com.inlab.racodemoapi.R;
-import com.inlab.racodemoapi.RetrofitSettings.AccessToken;
-import com.inlab.racodemoapi.RetrofitSettings.LoginService;
-import com.inlab.racodemoapi.RetrofitSettings.ServiceGenerator;
+import com.inlab.racodemoapi.ServiceSettings.AccessToken;
+import com.inlab.racodemoapi.ServiceSettings.LoginService;
+import com.inlab.racodemoapi.ServiceSettings.ServiceGenerator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
