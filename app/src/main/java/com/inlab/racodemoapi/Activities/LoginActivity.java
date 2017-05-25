@@ -68,20 +68,15 @@ public class LoginActivity extends Activity {
             // use the parameter your API exposes for the code (mostly it's "code")
             String code = uri.getQueryParameter("code");
             if (code != null) {
-                // get access token
+                // At this point, we have the Authorization code, so we can get the Access token
                 LoginService loginService =
                         ServiceGenerator.createService(LoginService.class);
                 Call<AccessToken> call = loginService.getAccessToken("authorization_code",code, redirectUri,clientId, clientSecret);
-                System.out.println(code);
                     call.enqueue(new Callback<AccessToken>() {
                         @Override
                         public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
-                            System.out.println("CODE="+response.code());
                             if (response.isSuccessful()) {
                                 accessToken = response.body();
-                                String json = new Gson().toJson(accessToken);
-                                System.out.println(json);
-                                String success = "Log in successful";
                                 isLogged = true;
                                 savePrefs();
                                 goToMain();
