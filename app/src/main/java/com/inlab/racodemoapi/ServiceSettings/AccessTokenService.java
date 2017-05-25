@@ -5,9 +5,6 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
-/**
- * Created by florencia.rimolo on 16/02/2017.
- */
 
 // This is the interface definition which is passed
 // to ServiceGenerator to create a Retrofit HTTP client.

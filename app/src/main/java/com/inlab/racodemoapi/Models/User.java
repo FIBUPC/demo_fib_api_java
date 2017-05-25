@@ -3,9 +3,6 @@ package com.inlab.racodemoapi.Models;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by florencia.rimolo on 16/02/2017.
- */
 
 public class User {
 

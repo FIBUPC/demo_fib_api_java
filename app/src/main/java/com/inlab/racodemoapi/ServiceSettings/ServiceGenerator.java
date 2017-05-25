@@ -6,9 +6,6 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * Created by florencia.rimolo on 14/02/2017.
- */
 
 public class ServiceGenerator {
 

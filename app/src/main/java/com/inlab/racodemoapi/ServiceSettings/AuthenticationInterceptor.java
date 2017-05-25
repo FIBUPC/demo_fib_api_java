@@ -6,9 +6,7 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by florencia.rimolo on 16/02/2017.
- */
+
 public class AuthenticationInterceptor implements Interceptor {
     /**
      * We're using the Interceptor to set the Authorization field

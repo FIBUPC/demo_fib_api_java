@@ -3,9 +3,7 @@ package com.inlab.racodemoapi.ServiceSettings;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by florencia.rimolo on 16/02/2017.
- */
+
 
 public class AccessToken {
 
