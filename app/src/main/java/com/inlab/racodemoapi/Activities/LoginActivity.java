@@ -12,11 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.inlab.racodemoapi.Models.User;
 import com.inlab.racodemoapi.R;
 import com.inlab.racodemoapi.ServiceSettings.AccessToken;
-import com.inlab.racodemoapi.ServiceSettings.LoginService;
+import com.inlab.racodemoapi.ServiceSettings.AccessTokenService;
 import com.inlab.racodemoapi.ServiceSettings.ServiceGenerator;
 
 import retrofit2.Call;
@@ -69,9 +68,9 @@ public class LoginActivity extends Activity {
             String code = uri.getQueryParameter("code");
             if (code != null) {
                 // At this point, we have the Authorization code, so we can get the Access token
-                LoginService loginService =
-                        ServiceGenerator.createService(LoginService.class);
-                Call<AccessToken> call = loginService.getAccessToken("authorization_code",code, redirectUri,clientId, clientSecret);
+                AccessTokenService accessTokenService =
+                        ServiceGenerator.createService(AccessTokenService.class);
+                Call<AccessToken> call = accessTokenService.getAccessToken("authorization_code",code, redirectUri,clientId, clientSecret);
                     call.enqueue(new Callback<AccessToken>() {
                         @Override
                         public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {

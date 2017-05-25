@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 
 // This is the interface definition which is passed
 // to ServiceGenerator to create a Retrofit HTTP client.
-public interface LoginService {
+public interface AccessTokenService {
     @FormUrlEncoded
     @POST("o/token")
     Call<AccessToken> getAccessToken(

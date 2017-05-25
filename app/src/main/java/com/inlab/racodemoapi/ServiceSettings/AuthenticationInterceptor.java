@@ -10,6 +10,11 @@ import okhttp3.Response;
  * Created by florencia.rimolo on 16/02/2017.
  */
 public class AuthenticationInterceptor implements Interceptor {
+    /**
+     * We're using the Interceptor to set the Authorization field
+     * within the HTTP request header. This field consists of two parts: first, the token type which
+     * is Bearer for OAuth requests and second, the access token.
+     */
 
     private String authToken;
 
