@@ -42,9 +42,6 @@ public class LoginActivity extends Activity {
         textView = (TextView)findViewById(R.id.textViewJo);
         Button loginButton = (Button) findViewById(R.id.loginbutton);
         prefs = this.getSharedPreferences("com.inlab.racodemoapi",Context.MODE_PRIVATE);
-        if (prefs.getBoolean("isLogged", false)) {
-            goToMain();
-        }
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +100,7 @@ public class LoginActivity extends Activity {
     }
 
     public void goToMain() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
