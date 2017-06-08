@@ -35,7 +35,6 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
         prefs = this.getSharedPreferences("com.inlab.racodemoapi", Context.MODE_PRIVATE);
         accessToken = prefs.getString("accessToken", null);
-        System.out.println(accessToken);
         final RacoAPIService racoAPIService = ServiceGenerator.createService(RacoAPIService.class, OAuthParams.clientID, OAuthParams.clientSecret, accessToken);
         Call<User> call1 = racoAPIService.getMyInfo();
         final TextView textViewJo = (TextView) findViewById(R.id.textViewJo);
@@ -44,8 +43,6 @@ public class MainMenuActivity extends AppCompatActivity {
         call1.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                String json = new Gson().toJson(response.body());
-                System.out.println(json);
                 String jo = response.body().getNom();
                 jo += " " + response.body().getCognoms();
                 String username = response.body().getUsername();
@@ -53,14 +50,11 @@ public class MainMenuActivity extends AppCompatActivity {
                 textViewJo.setText(jo);
                 textViewUsername.setText(username);
                 textViewEmail.setText(email);
-
-
-
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
+                Log.d("onFailure", t.toString());
             }
         });
         Call<ResponseBody> call2 = racoAPIService.getMyPhoto();
@@ -70,12 +64,11 @@ public class MainMenuActivity extends AppCompatActivity {
                 ImageView imageView = (ImageView) findViewById(R.id.imageView);
                 Bitmap bm = BitmapFactory.decodeStream(response.body().byteStream());
                 imageView.setImageBitmap(bm);
-                System.out.println("imatge");
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                System.out.println("fail");
+                Log.d("onFailure", t.toString());
             }
         });
     }

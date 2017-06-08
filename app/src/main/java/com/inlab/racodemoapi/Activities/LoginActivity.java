@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -77,11 +78,13 @@ public class LoginActivity extends Activity {
 
                         @Override
                         public void onFailure(Call<AccessToken> call, Throwable t) {
+                            Log.d("onFailure", t.toString());
                         }
                     });
 
             } else if (uri.getQueryParameter("error") != null) {
-                // show an error message here
+                // show an error message
+                Log.d("onFailure", uri.getQueryParameter("error"));
             }
         }
     }
