@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.inlab.racodemoapi.Constants.OAuthParams;
 import com.inlab.racodemoapi.Models.User;
 import com.inlab.racodemoapi.R;
 import com.inlab.racodemoapi.ServiceSettings.RacoAPIService;
@@ -35,7 +36,7 @@ public class MainMenuActivity extends AppCompatActivity {
         prefs = this.getSharedPreferences("com.inlab.racodemoapi", Context.MODE_PRIVATE);
         accessToken = prefs.getString("accessToken", null);
         System.out.println(accessToken);
-        final RacoAPIService racoAPIService = ServiceGenerator.createService(RacoAPIService.class, LoginActivity.clientId, LoginActivity.clientSecret, accessToken);
+        final RacoAPIService racoAPIService = ServiceGenerator.createService(RacoAPIService.class, OAuthParams.clientID, OAuthParams.clientSecret, accessToken);
         Call<User> call1 = racoAPIService.getMyInfo();
         final TextView textViewJo = (TextView) findViewById(R.id.textViewJo);
         final TextView textViewUsername = (TextView) findViewById(R.id.textViewUsername);
