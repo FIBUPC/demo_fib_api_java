@@ -10,11 +10,39 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.inlab.racodemoapi.Activities.MainMenuActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+
+        android:scaleType="fitCenter"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="211dp"
-        android:id="@+id/textView"
+        android:layout_marginTop="200dp"
+        android:id="@+id/textViewJo"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textViewUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewJo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp" />
+
+    <TextView
+        android:id="@+id/textViewEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewUsername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp" />
+
 </RelativeLayout>
