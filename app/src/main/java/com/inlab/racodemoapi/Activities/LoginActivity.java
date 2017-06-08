@@ -28,8 +28,7 @@ public class LoginActivity extends Activity {
 
     private AccessToken accessToken;
     private SharedPreferences prefs;
-    private TextView textView;
-    private User user;
+    TextView textView;
     private boolean isLogged;
 
     @Override
@@ -93,9 +92,6 @@ public class LoginActivity extends Activity {
         editor.putString("accessToken", this.accessToken.getAccessToken());
         editor.putBoolean("isLogged", this.isLogged);
         editor.apply();
-    }
-    public Activity getActivity() {
-        return this;
     }
 
     public void goToMain() {
