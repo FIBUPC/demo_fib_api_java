@@ -19,6 +19,7 @@ import com.inlab.racodemoapi.ServiceSettings.ServiceGenerator;
 
 import java.io.InputStream;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +35,7 @@ public class MainMenuActivity extends AppCompatActivity {
         prefs = this.getSharedPreferences("com.inlab.racodemoapi", Context.MODE_PRIVATE);
         accessToken = prefs.getString("accessToken", null);
         System.out.println(accessToken);
-        RacoAPIService racoAPIService = ServiceGenerator.createService(RacoAPIService.class, LoginActivity.clientId, LoginActivity.clientSecret, accessToken);
+        final RacoAPIService racoAPIService = ServiceGenerator.createService(RacoAPIService.class, LoginActivity.clientId, LoginActivity.clientSecret, accessToken);
         Call<User> call1 = racoAPIService.getMyInfo();
         final TextView textViewJo = (TextView) findViewById(R.id.textViewJo);
         final TextView textViewUsername = (TextView) findViewById(R.id.textViewUsername);
@@ -48,18 +49,32 @@ public class MainMenuActivity extends AppCompatActivity {
                 jo += " " + response.body().getCognoms();
                 String username = response.body().getUsername();
                 String email = response.body().getEmail();
-                String image = response.body().getFoto();
-                new DownloadImageFromInternet((ImageView) findViewById(R.id.imageView))
-                        .execute(image);
-
                 textViewJo.setText(jo);
                 textViewUsername.setText(username);
                 textViewEmail.setText(email);
+
+
+
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
 
+            }
+        });
+        Call<ResponseBody> call2 = racoAPIService.getMyPhoto();
+        call2.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                Bitmap bm = BitmapFactory.decodeStream(response.body().byteStream());
+                imageView.setImageBitmap(bm);
+                System.out.println("imatge");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.println("fail");
             }
         });
     }
@@ -73,6 +88,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
         protected Bitmap doInBackground(String... urls) {
             String imageURL = urls[0];
+            System.out.println(imageURL);
             Bitmap bimage = null;
             try {
                 InputStream in = new java.net.URL(imageURL).openStream();
