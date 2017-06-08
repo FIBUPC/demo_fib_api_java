@@ -27,7 +27,7 @@ import retrofit2.Response;
 public class LoginActivity extends Activity {
 
     private AccessToken accessToken;
-    private SharedPreferences prefs;
+    SharedPreferences prefs;
     TextView textView;
     private boolean isLogged;
 
