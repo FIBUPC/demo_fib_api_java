@@ -41,6 +41,7 @@ public class LoginActivity extends Activity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // If we click on login button, we'll be redirected to the REDIRECT_URI parameter of our application
                 Intent intent = new Intent(
                         Intent.ACTION_VIEW,
                         Uri.parse(ServiceGenerator.API_BASE_URL + "o/authorize/" + "?client_id=" + OAuthParams.clientID + "&response_type=" + OAuthParams.responseType + "&state=random_state_string"));
