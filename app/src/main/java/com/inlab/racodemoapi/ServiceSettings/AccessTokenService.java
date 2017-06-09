@@ -11,7 +11,7 @@ import retrofit2.http.POST;
 public interface AccessTokenService {
     @FormUrlEncoded
     @POST("o/token")
-    Call<AccessToken> getAccessToken(
+    Call<TokenResponse> getAccessToken(
             @Field("grant_type") String grantType,
             @Field("code") String code,
             @Field("redirect_uri") String redirectURI,
