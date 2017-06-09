@@ -89,7 +89,8 @@ public class LoginActivity extends Activity {
     }
     private void savePrefs() {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("tokenResponse", this.tokenResponse.getAccessToken());
+        editor.putString("accessToken", this.tokenResponse.getAccessToken());
+        editor.putString("refreshToken", this.tokenResponse.getRefreshToken());
         editor.putBoolean("isLogged", this.isLogged);
         editor.apply();
     }
