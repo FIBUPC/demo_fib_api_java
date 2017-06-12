@@ -95,7 +95,7 @@ public class LoginActivity extends Activity {
         editor.apply();
     }
 
-    public void goToMain() {
+    private void goToMain() {
         Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
