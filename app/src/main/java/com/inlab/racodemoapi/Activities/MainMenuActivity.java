@@ -43,13 +43,15 @@ public class MainMenuActivity extends AppCompatActivity {
         call1.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                String jo = response.body().getNom();
-                jo += " " + response.body().getCognoms();
-                String username = response.body().getUsername();
-                String email = response.body().getEmail();
-                textViewJo.setText(jo);
-                textViewUsername.setText(username);
-                textViewEmail.setText(email);
+                if (response.isSuccessful()) {
+                    String jo = response.body().getNom();
+                    jo += " " + response.body().getCognoms();
+                    String username = response.body().getUsername();
+                    String email = response.body().getEmail();
+                    textViewJo.setText(jo);
+                    textViewUsername.setText(username);
+                    textViewEmail.setText(email);
+                }
             }
 
             @Override
@@ -61,9 +63,11 @@ public class MainMenuActivity extends AppCompatActivity {
         call2.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                ImageView imageView = (ImageView) findViewById(R.id.imageView);
-                Bitmap bm = BitmapFactory.decodeStream(response.body().byteStream());
-                imageView.setImageBitmap(bm);
+                if (response.isSuccessful()){
+                    ImageView imageView = (ImageView) findViewById(R.id.imageView);
+                    Bitmap bm = BitmapFactory.decodeStream(response.body().byteStream());
+                    imageView.setImageBitmap(bm);
+                }
             }
 
             @Override
