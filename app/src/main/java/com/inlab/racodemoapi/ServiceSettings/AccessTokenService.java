@@ -18,4 +18,12 @@ public interface AccessTokenService {
             @Field("client_id") String clientID,
             @Field("client_secret") String client_secret);
 
+    @FormUrlEncoded
+    @POST("o/token")
+    Call<TokenResponse> getRefreshToken(
+            @Field("grant_type") String grantType,
+            @Field("refresh_token") String code,
+            @Field("client_id") String clientID,
+            @Field("client_secret") String client_secret);
+
 }
