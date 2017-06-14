@@ -45,7 +45,6 @@ public class ServiceGenerator {
 
             if (!httpClient.interceptors().contains(interceptor)) {
                 httpClient.addInterceptor(interceptor);
-                //httpClient.authenticator(new RefreshTokenAuthenticator(c));
                 builder.client(httpClient.build());
                 retrofit = builder.build();
             }
