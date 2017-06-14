@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.inlab.racodemoapi.Constants.OAuthParams;
 import com.inlab.racodemoapi.Models.User;
 import com.inlab.racodemoapi.R;
@@ -22,9 +20,6 @@ import com.inlab.racodemoapi.ServiceSettings.AccessTokenService;
 import com.inlab.racodemoapi.ServiceSettings.RacoAPIService;
 import com.inlab.racodemoapi.ServiceSettings.ServiceGenerator;
 import com.inlab.racodemoapi.ServiceSettings.TokenResponse;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -42,9 +37,7 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        prefs = this.getSharedPreferences("com.inlab.racodemoapi", Context.MODE_PRIVATE);
         signOutButton = (Button) findViewById(R.id.signOutButton);
-        getMyInfo();
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +53,8 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        prefs = this.getSharedPreferences("com.inlab.racodemoapi", Context.MODE_PRIVATE);
+        getUserInfo();
     }
 
     private void refreshAccessToken() {
@@ -71,13 +66,16 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                 if (response.isSuccessful()) {
                     ts = response.body();
+                    // Save the new values
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putString("accessToken", ts.getAccessToken());
                     System.out.println(ts.getAccessToken());
                     editor.putString("refreshToken", ts.getRefreshToken());
                     editor.apply();
-                    getMyInfo();
+                    // At this point, we go back to the call to get the user's info that will be displayed
+                    getUserInfo();
                 }
+                // TODO What do we have to do if response is not successful?
             }
 
             @Override
@@ -86,9 +84,10 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
-    private void getMyPhoto() {
+    private void getUserPhoto() {
         accessToken = prefs.getString("accessToken", null);
         racoAPIService = ServiceGenerator.createService(RacoAPIService.class, OAuthParams.clientID, OAuthParams.clientSecret, accessToken, this);
         Call<ResponseBody> call2 = racoAPIService.getMyPhoto();
@@ -100,7 +99,6 @@ public class MainMenuActivity extends AppCompatActivity {
                     Bitmap bm = BitmapFactory.decodeStream(response.body().byteStream());
                     imageView.setImageBitmap(bm);
                 }
-                System.out.println(response.code());
             }
 
             @Override
@@ -110,7 +108,7 @@ public class MainMenuActivity extends AppCompatActivity {
         });
     }
 
-    private void getMyInfo() {
+    private void getUserInfo() {
 
         accessToken = prefs.getString("accessToken", null);
         racoAPIService = ServiceGenerator.createService(RacoAPIService.class, OAuthParams.clientID, OAuthParams.clientSecret, accessToken, this);
@@ -131,9 +129,10 @@ public class MainMenuActivity extends AppCompatActivity {
                     textViewEmail.setText(email);
                 }
                 if (response.code() == 401) {
+                    // The call returns 401 if the access token has expired
                     refreshAccessToken();
                 }
-                getMyPhoto();
+                getUserPhoto();
             }
 
             @Override
