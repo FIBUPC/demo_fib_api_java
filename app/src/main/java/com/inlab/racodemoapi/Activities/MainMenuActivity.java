@@ -116,6 +116,8 @@ public class MainMenuActivity extends AppCompatActivity {
         final TextView textViewJo = (TextView) findViewById(R.id.textViewJo);
         final TextView textViewUsername = (TextView) findViewById(R.id.textViewUsername);
         final TextView textViewEmail = (TextView) findViewById(R.id.textViewEmail);
+        final TextView textViewAccessToken = (TextView) findViewById(R.id.textViewAccessToken);
+        final TextView textViewRefreshToken = (TextView) findViewById(R.id.textViewRefreshToken);
         call1.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
@@ -127,6 +129,11 @@ public class MainMenuActivity extends AppCompatActivity {
                     textViewJo.setText(jo);
                     textViewUsername.setText(username);
                     textViewEmail.setText(email);
+                    String textAccessToken = "Access Token: " + accessToken;
+                    textViewAccessToken.setText(textAccessToken);
+                    String textRefreshToken = "Refresh Token: " + prefs.getString("refreshToken", null);
+                    textViewRefreshToken.setText(textRefreshToken);
+
                 }
                 if (response.code() == 401) {
                     // The call returns 401 if the access token has expired
