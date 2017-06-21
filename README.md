@@ -20,5 +20,6 @@ It is recommended to read:
  [here](http://api.fib.upc.edu/v2/o/applications/register_private/).
 
 Once you have satisfied this requirements, open the Android project and go to
-`/app/src/main/java/com.inlab.racodemoapi/Constants/OAuthParams.java` and replace `clientID` and
-`clientSecret` variable with your own corresponding application's values. 
+`/app/src/main/java/com.inlab.racodemoapi/Constants/OAuthParamsTemplate.java` and copy its content to
+a new file called `OAuthParams` at the same package. Go to this new file and replace the `clientID` and
+`clientSecret` variables with your own corresponding application's values. 
