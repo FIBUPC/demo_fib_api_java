@@ -1,6 +1,9 @@
 package com.inlab.racodemoapi.Activities;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -41,16 +44,8 @@ public class MainMenuActivity extends AppCompatActivity {
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putString("accessToken", null);
-                editor.putString("refreshToken", null);
-                editor.putBoolean("isLogged", false);
-                editor.apply();
-                Intent intent = new Intent(MainMenuActivity.this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
+                clearPrefs();
+                goToLogin();
             }
         });
         prefs = this.getSharedPreferences("com.inlab.racodemoapi", Context.MODE_PRIVATE);
@@ -75,7 +70,10 @@ public class MainMenuActivity extends AppCompatActivity {
                     // At this point, we go back to the call to get the user's info that will be displayed
                     getUserInfo();
                 }
-                // TODO What do we have to do if response is not successful?
+                else {
+                    showErrorDialog(response.code());
+                }
+
             }
 
             @Override
@@ -85,6 +83,21 @@ public class MainMenuActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void showErrorDialog(int code) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Codi d'error: "+ code)
+                .setTitle(R.string.dialog_error_title);
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK button
+                clearPrefs();
+                goToLogin();
+            }
+        });
+        builder.create();
+        builder.show();
     }
 
     private void getUserPhoto() {
@@ -135,10 +148,16 @@ public class MainMenuActivity extends AppCompatActivity {
                     textViewRefreshToken.setText(textRefreshToken);
 
                 }
-                if (response.code() == 401) {
-                    // The call returns 401 if the access token has expired
-                    refreshAccessToken();
+                else {
+                    if (response.code() == 401) {
+                        // The call returns 401 if the access token has expired
+                        refreshAccessToken();
+                    }
+                    else {
+                        showErrorDialog(response.code());
+                    }
                 }
+
                 getUserPhoto();
             }
 
@@ -147,6 +166,26 @@ public class MainMenuActivity extends AppCompatActivity {
                 Log.d("onFailure", t.toString());
             }
         });
+    }
+
+    private Activity getActivity() {
+        return this;
+    }
+
+    private void goToLogin() {
+        Intent intent = new Intent(MainMenuActivity.this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(intent);
+    }
+
+    private void clearPrefs() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("accessToken", null);
+        editor.putString("refreshToken", null);
+        editor.putBoolean("isLogged", false);
+        editor.apply();
     }
 }
 

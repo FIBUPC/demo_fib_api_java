@@ -16,4 +16,6 @@
     <string name="title_activity_login">Sign in</string>
     <string name="fib">"Racó Demo API - Facultat d'Informàtica de Barcelona"</string>
     <string name="action_sign_out">"Sign out"</string>
+    <string name="dialog_error_title">"Error"</string>
+    <string name="ok">"OK"</string>
 </resources>
