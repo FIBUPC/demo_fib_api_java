@@ -14,9 +14,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.inlab.racodemoapi.Constants.OAuthParams;
-import com.inlab.racodemoapi.Models.User;
 import com.inlab.racodemoapi.R;
-import com.inlab.racodemoapi.ServiceSettings.AccessToken;
+import com.inlab.racodemoapi.ServiceSettings.TokenResponse;
 import com.inlab.racodemoapi.ServiceSettings.AccessTokenService;
 import com.inlab.racodemoapi.ServiceSettings.ServiceGenerator;
 
@@ -26,7 +25,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends Activity {
 
-    private AccessToken accessToken;
+    private TokenResponse tokenResponse;
     SharedPreferences prefs;
     TextView textView;
     private boolean isLogged;
@@ -64,12 +63,12 @@ public class LoginActivity extends Activity {
                 // At this point, we have the Authorization code, so we can get the Access token
                 AccessTokenService accessTokenService =
                         ServiceGenerator.createService(AccessTokenService.class);
-                Call<AccessToken> call = accessTokenService.getAccessToken("authorization_code",code, OAuthParams.redirectUri,OAuthParams.clientID, OAuthParams.clientSecret);
-                    call.enqueue(new Callback<AccessToken>() {
+                Call<TokenResponse> call = accessTokenService.getAccessToken("authorization_code",code, OAuthParams.redirectUri,OAuthParams.clientID, OAuthParams.clientSecret);
+                    call.enqueue(new Callback<TokenResponse>() {
                         @Override
-                        public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+                        public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
                             if (response.isSuccessful()) {
-                                accessToken = response.body();
+                                tokenResponse = response.body();
                                 isLogged = true;
                                 savePrefs();
                                 goToMain();
@@ -77,7 +76,7 @@ public class LoginActivity extends Activity {
                         }
 
                         @Override
-                        public void onFailure(Call<AccessToken> call, Throwable t) {
+                        public void onFailure(Call<TokenResponse> call, Throwable t) {
                             Log.d("onFailure", t.toString());
                         }
                     });
@@ -90,12 +89,13 @@ public class LoginActivity extends Activity {
     }
     private void savePrefs() {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("accessToken", this.accessToken.getAccessToken());
+        editor.putString("accessToken", this.tokenResponse.getAccessToken());
+        editor.putString("refreshToken", this.tokenResponse.getRefreshToken());
         editor.putBoolean("isLogged", this.isLogged);
         editor.apply();
     }
 
-    public void goToMain() {
+    private void goToMain() {
         Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

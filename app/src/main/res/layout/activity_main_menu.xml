@@ -45,4 +45,30 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="2dp" />
 
+    <Button
+        android:id="@+id/signOutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:text="@string/action_sign_out"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewAccessToken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewEmail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp" />
+
+    <TextView
+        android:id="@+id/textViewRefreshToken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewAccessToken"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp" />
+
 </RelativeLayout>

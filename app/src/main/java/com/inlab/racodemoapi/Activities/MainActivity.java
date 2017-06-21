@@ -34,11 +34,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Intent nextActivity() {
-        if (! prefs.getBoolean("isLogged", false)) {
+        if (prefs.getBoolean("isLogged", false)) {
             return new Intent(MainActivity.this, MainMenuActivity.class);
         } else {
             return new Intent(MainActivity.this, LoginActivity.class);
         }
     }
+
 
 }

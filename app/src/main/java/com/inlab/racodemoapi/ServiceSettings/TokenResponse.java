@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 
 
-public class AccessToken {
+public class TokenResponse {
 
     @SerializedName("access_token")
     @Expose
