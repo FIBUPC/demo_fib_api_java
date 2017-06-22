@@ -28,7 +28,7 @@
                     android:scheme="apifib" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainMenuActivity"></activity>
+        <activity android:name=".Activities.LoggedActivity"></activity>
     </application>
 
 </manifest>

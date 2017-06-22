@@ -1,6 +1,5 @@
 package com.inlab.racodemoapi.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent nextActivity() {
         if (prefs.getBoolean("isLogged", false)) {
-            return new Intent(MainActivity.this, MainMenuActivity.class);
+            return new Intent(MainActivity.this, LoggedActivity.class);
         } else {
             return new Intent(MainActivity.this, LoginActivity.class);
         }

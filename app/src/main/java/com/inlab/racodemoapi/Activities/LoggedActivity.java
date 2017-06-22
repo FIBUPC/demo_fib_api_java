@@ -29,7 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainMenuActivity extends AppCompatActivity {
+public class LoggedActivity extends AppCompatActivity {
     SharedPreferences prefs;
     String accessToken;
     Button signOutButton;
@@ -39,7 +39,7 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_logged);
         signOutButton = (Button) findViewById(R.id.signOutButton);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,7 +173,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     private void goToLogin() {
-        Intent intent = new Intent(MainMenuActivity.this, LoginActivity.class);
+        Intent intent = new Intent(LoggedActivity.this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);

@@ -96,7 +96,7 @@ public class LoginActivity extends Activity {
     }
 
     private void goToMain() {
-        Intent intent = new Intent(LoginActivity.this, MainMenuActivity.class);
+        Intent intent = new Intent(LoginActivity.this, LoggedActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
