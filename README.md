@@ -16,8 +16,9 @@ It is recommended to read:
 - Android Studio
 - Retrofit 2.1.0
 - An Android device with Android 4.1 (API 16) or higher
-- Also, you must have to register a private application at FIB API. You can do that
- [here](http://api.fib.upc.edu/v2/o/applications/register_private/).
+- Also, you have to register a private application at FIB API. You can do that
+ [here](http://api.fib.upc.edu/v2/o/applications/register_private/). IMPORTANT! The value of
+  Redirect URIs must follow the schema `apifib://`, for example `apifib://raco`.
 
 Once you have satisfied this requirements, open the Android project and go to
 `/app/src/main/java/com.inlab.racodemoapi/Constants/OAuthParamsTemplate.java` and copy its content to
