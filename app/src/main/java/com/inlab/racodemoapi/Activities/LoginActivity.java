@@ -34,16 +34,16 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        textView = (TextView)findViewById(R.id.textViewJo);
+        textView = (TextView) findViewById(R.id.textViewJo);
         Button loginButton = (Button) findViewById(R.id.loginbutton);
-        prefs = this.getSharedPreferences("com.inlab.racodemoapi",Context.MODE_PRIVATE);
+        prefs = this.getSharedPreferences("com.inlab.racodemoapi", Context.MODE_PRIVATE);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // If we click on login button, we'll be redirected to the REDIRECT_URI parameter of our application
                 Intent intent = new Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse(ServiceGenerator.API_BASE_URL + "o/authorize/" + "?client_id=" + OAuthParams.clientID + "&response_type=" + OAuthParams.responseType + "&state=random_state_string"));
+                        Uri.parse(ServiceGenerator.API_BASE_URL + "o/authorize/" + "?client_id=" + OAuthParams.clientID + "&redirect_uri=" + OAuthParams.redirectUri + "&response_type=" + OAuthParams.responseType + "&state=random_state_string"));
                 startActivity(intent);
             }
         });
@@ -63,23 +63,23 @@ public class LoginActivity extends Activity {
                 // At this point, we have the Authorization code, so we can get the Access token
                 AccessTokenService accessTokenService =
                         ServiceGenerator.createService(AccessTokenService.class);
-                Call<TokenResponse> call = accessTokenService.getAccessToken("authorization_code",code, OAuthParams.redirectUri,OAuthParams.clientID, OAuthParams.clientSecret);
-                    call.enqueue(new Callback<TokenResponse>() {
-                        @Override
-                        public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
-                            if (response.isSuccessful()) {
-                                tokenResponse = response.body();
-                                isLogged = true;
-                                savePrefs();
-                                goToMain();
-                            }
+                Call<TokenResponse> call = accessTokenService.getAccessToken("authorization_code", code, OAuthParams.redirectUri, OAuthParams.clientID, OAuthParams.clientSecret);
+                call.enqueue(new Callback<TokenResponse>() {
+                    @Override
+                    public void onResponse(Call<TokenResponse> call, Response<TokenResponse> response) {
+                        if (response.isSuccessful()) {
+                            tokenResponse = response.body();
+                            isLogged = true;
+                            savePrefs();
+                            goToMain();
                         }
+                    }
 
-                        @Override
-                        public void onFailure(Call<TokenResponse> call, Throwable t) {
-                            Log.d("onFailure", t.toString());
-                        }
-                    });
+                    @Override
+                    public void onFailure(Call<TokenResponse> call, Throwable t) {
+                        Log.d("onFailure", t.toString());
+                    }
+                });
 
             } else if (uri.getQueryParameter("error") != null) {
                 // show an error message
@@ -87,6 +87,7 @@ public class LoginActivity extends Activity {
             }
         }
     }
+
     private void savePrefs() {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("accessToken", this.tokenResponse.getAccessToken());
