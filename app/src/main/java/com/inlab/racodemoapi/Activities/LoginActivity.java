@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-
 import android.net.Uri;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,9 +13,10 @@ import android.widget.TextView;
 
 import com.inlab.racodemoapi.Constants.OAuthParams;
 import com.inlab.racodemoapi.R;
-import com.inlab.racodemoapi.ServiceSettings.TokenResponse;
 import com.inlab.racodemoapi.ServiceSettings.AccessTokenService;
 import com.inlab.racodemoapi.ServiceSettings.ServiceGenerator;
+import com.inlab.racodemoapi.ServiceSettings.TokenResponse;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,13 +36,14 @@ public class LoginActivity extends Activity {
         textView = (TextView) findViewById(R.id.textViewJo);
         Button loginButton = (Button) findViewById(R.id.loginbutton);
         prefs = this.getSharedPreferences("com.inlab.racodemoapi", Context.MODE_PRIVATE);
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // If we click on login button, we'll be redirected to the REDIRECT_URI parameter of our application
                 Intent intent = new Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse(ServiceGenerator.API_BASE_URL + "o/authorize/" + "?client_id=" + OAuthParams.clientID + "&redirect_uri=" + OAuthParams.redirectUri + "&response_type=" + OAuthParams.responseType + "&state=random_state_string"));
+                        Uri.parse(ServiceGenerator.API_BASE_URL + "o/authorize/" + "?client_id=" + OAuthParams.clientID + "&redirect_uri=" + OAuthParams.redirectUri + "&response_type=" + OAuthParams.responseType + "&state=" + OAuthParams.getRandomString()));
                 startActivity(intent);
             }
         });
@@ -59,7 +59,9 @@ public class LoginActivity extends Activity {
         if (uri != null && uri.toString().startsWith(OAuthParams.redirectUri)) {
             // use the parameter your API exposes for the code (mostly it's "code")
             String code = uri.getQueryParameter("code");
-            if (code != null) {
+            String received_state = uri.getQueryParameter("state");
+            Log.d("the two states", OAuthParams.state + " " + received_state);
+            if (code != null && received_state != null && OAuthParams.state.equals(received_state)) {
                 // At this point, we have the Authorization code, so we can get the Access token
                 AccessTokenService accessTokenService =
                         ServiceGenerator.createService(AccessTokenService.class);
@@ -103,5 +105,7 @@ public class LoginActivity extends Activity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
+
+
 }
 
